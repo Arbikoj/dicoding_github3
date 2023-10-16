@@ -1,21 +1,31 @@
 package com.arbi.gihubapp.ui.main
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arbi.gihubapp.R
 import com.arbi.gihubapp.data.model.User
 import com.arbi.gihubapp.databinding.ActivityMainBinding
 import com.arbi.gihubapp.ui.detail.DetailUserActivity
+import com.arbi.gihubapp.ui.setting.SettingActivity
+import com.arbi.gihubapp.ui.setting.SettingPreferences
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -26,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpToolbar()
 
         adapter = UserAdapter()
         adapter.notifyDataSetChanged()
@@ -37,7 +48,10 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+
+        val pref = SettingPreferences.getInstance(dataStore)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(pref))[MainViewModel::class.java]
 
         binding.apply {
             rvUser.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -67,6 +81,8 @@ class MainActivity : AppCompatActivity() {
                 binding.tvNodata.visibility = View.VISIBLE
             }
         }
+
+        darkModeCheck()
     }
     private fun searchUser(){
         binding.apply {
@@ -84,6 +100,33 @@ class MainActivity : AppCompatActivity() {
     }
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun setUpToolbar() {
+        binding.toolbar.setOnMenuItemClickListener(this)
+    }
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.btn_setting -> {
+                val setting = Intent(this, SettingActivity::class.java)
+                startActivity(setting)
+                true
+            }
+//            R.id.btn_favorite -> {
+//                val favorite = Intent(this, FavoriteActivity::class.java)
+//                startActivity(favorite)
+//                true
+//            }
+            else -> false
+        }
+    }
+
+    private fun darkModeCheck(){
+        viewModel.getThemeSettings().observe(this@MainActivity) { isDarkModeActive ->
+            if (isDarkModeActive) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
     }
 
 }

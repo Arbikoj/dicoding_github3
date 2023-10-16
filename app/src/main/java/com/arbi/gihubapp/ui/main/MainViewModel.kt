@@ -1,18 +1,19 @@
 package com.arbi.gihubapp.ui.main
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.arbi.gihubapp.api.RetrofitClient
 import com.arbi.gihubapp.data.model.User
 import com.arbi.gihubapp.data.model.UserResponse
+import com.arbi.gihubapp.ui.setting.SettingPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     inner class ViewModelProvider(mainActivity: MainActivity, get: Any) {
 
     }
@@ -41,6 +42,10 @@ class MainViewModel : ViewModel() {
 
     fun getSearchUsers():LiveData<ArrayList<User>>{
         return listUser
+    }
+
+    fun getThemeSettings(): LiveData<Boolean> {
+        return pref.getThemeSetting().asLiveData()
     }
 
 }
