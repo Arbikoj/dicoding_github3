@@ -18,9 +18,11 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arbi.gihubapp.R
+import com.arbi.gihubapp.data.model.DetailUserResponse
 import com.arbi.gihubapp.data.model.User
 import com.arbi.gihubapp.databinding.ActivityMainBinding
 import com.arbi.gihubapp.ui.detail.DetailUserActivity
+import com.arbi.gihubapp.ui.favorite.FavoriteActivity
 import com.arbi.gihubapp.ui.setting.SettingActivity
 import com.arbi.gihubapp.ui.setting.SettingPreferences
 
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         adapter.setOnItemClickCallback(object: UserAdapter.OnItemClickCallback{
             override fun onItemClicked(data: User) {
                 val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
+                intent.putExtra(DetailUserActivity.EXTRA_ID, data.id)
+                intent.putExtra(DetailUserActivity.EXTRA_PHOTO, data.avatar_url)
                 intent.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
                 startActivity(intent)
             }
@@ -112,11 +116,11 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 startActivity(setting)
                 true
             }
-//            R.id.btn_favorite -> {
-//                val favorite = Intent(this, FavoriteActivity::class.java)
-//                startActivity(favorite)
-//                true
-//            }
+            R.id.btn_favorite -> {
+                val favorite = Intent(this, FavoriteActivity::class.java)
+                startActivity(favorite)
+                true
+            }
             else -> false
         }
     }

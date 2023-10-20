@@ -5,16 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailUserActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detail_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:menu="@menu/menu_detail"
+            app:title="@string/user_detail" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
         android:id="@+id/iv_profile"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        android:layout_marginTop="8dp"
+        android:contentDescription="@string/user_detail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/user_detail" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_bar" />
 
     <TextView
         android:id="@+id/tv_name"

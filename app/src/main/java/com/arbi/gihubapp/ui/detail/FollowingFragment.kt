@@ -42,7 +42,9 @@ class FollowingFragment : Fragment(R.layout.fragment_follow){
         adapter.setOnItemClickCallback(object : UserFollowsAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 val intent = Intent(context, DetailUserActivity::class.java)
+                intent.putExtra(DetailUserActivity.EXTRA_ID, data.id)
                 intent.putExtra(DetailUserActivity.EXTRA_USERNAME, data.login)
+                intent.putExtra(DetailUserActivity.EXTRA_PHOTO, data.avatar_url)
                 startActivity(intent)
             }
         })
