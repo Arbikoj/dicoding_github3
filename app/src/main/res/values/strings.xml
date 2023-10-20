@@ -43,4 +43,6 @@
     <string name="hasRemoved">Has Removed From Favorite</string>
     <string name="hasAdded">Has Added to Favorite</string>
 
+    <string name="splash">Loading...</string>
+
 </resources>
