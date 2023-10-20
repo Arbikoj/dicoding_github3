@@ -9,7 +9,6 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.datastore.core.DataStore
@@ -18,7 +17,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arbi.gihubapp.R
-import com.arbi.gihubapp.data.model.DetailUserResponse
 import com.arbi.gihubapp.data.model.User
 import com.arbi.gihubapp.databinding.ActivityMainBinding
 import com.arbi.gihubapp.ui.detail.DetailUserActivity
@@ -52,8 +50,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             }
 
         })
-//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
-
         val pref = SettingPreferences.getInstance(dataStore)
         viewModel = ViewModelProvider(this, MainViewModelFactory(pref))[MainViewModel::class.java]
 
@@ -85,8 +81,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 binding.tvNodata.visibility = View.VISIBLE
             }
         }
-
-        darkModeCheck()
+        isDarkMode()
     }
     private fun searchUser(){
         binding.apply {
@@ -125,7 +120,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    private fun darkModeCheck(){
+    private fun isDarkMode(){
         viewModel.getThemeSettings().observe(this@MainActivity) { isDarkModeActive ->
             if (isDarkModeActive) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

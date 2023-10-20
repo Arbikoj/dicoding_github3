@@ -14,10 +14,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
-    inner class ViewModelProvider(mainActivity: MainActivity, get: Any) {
-
-    }
-
     val listUser = MutableLiveData<ArrayList<User>>()
 
     fun setSearchUsers(query: String){
@@ -43,7 +39,6 @@ class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     fun getSearchUsers():LiveData<ArrayList<User>>{
         return listUser
     }
-
     fun getThemeSettings(): LiveData<Boolean> {
         return pref.getThemeSetting().asLiveData()
     }

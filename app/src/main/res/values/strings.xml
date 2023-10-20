@@ -40,4 +40,7 @@
     <string name="user_failed">User Tidak Ditemukan</string>
     <string name="user_nodata">Data Tidak Ada</string>
 
+    <string name="hasRemoved">Has Removed From Favorite</string>
+    <string name="hasAdded">Has Added to Favorite</string>
+
 </resources>

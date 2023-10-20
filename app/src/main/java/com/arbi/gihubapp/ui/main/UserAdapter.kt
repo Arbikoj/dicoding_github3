@@ -37,14 +37,12 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
                 tvUsername.text = user.login
 
             }
-
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserViewHolder((view))
-
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -57,7 +55,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>(){
         fun onItemClicked(data: User)
     }
 }
-
 
 class UserDiffUtilCallback(private val oldList: ArrayList<User>, private val newList: ArrayList<User>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {

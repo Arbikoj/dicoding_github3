@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import com.arbi.gihubapp.R
-import com.arbi.gihubapp.data.model.DetailUserResponse
 import com.arbi.gihubapp.data.db.FavoriteEntity
 import com.arbi.gihubapp.databinding.ActivityDetailUserBinding
 import com.arbi.gihubapp.ui.setting.SettingActivity
@@ -21,9 +20,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 class DetailUserActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var binding: ActivityDetailUserBinding
-
-    private lateinit var viewModel: DetailUserViewModel
-
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,92 +28,20 @@ class DetailUserActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener 
         setContentView(binding.root)
         setUpToolbar()
         val username = intent.getStringExtra(EXTRA_USERNAME)
-
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
-
-//        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
-//        showLoading(true)
         username?.let {
-//            viewModel.setUserDetail(it)
             addFavorite(it)
         }
-
-
-//        viewModel.getUserDetail().observe(this) {
-//            if (it != null) {
-//
-//
-//                val favorite = FavoriteEntity()
-//                favorite.login = username
-//                favorite.id = intent.getIntExtra(KEY_ID, 0)
-//                favorite.avatar_url = it?.avatar_url
-//
-//                val detailViewModel: DetailUserViewModel by viewModels {
-//                    DetailViewModelFactory(username, application)
-//                }
-//
-//
-//
-//                binding.fabFavorite.apply {
-//                    setOnClickListener {
-//                        if (isFavorite) {
-////                    detailViewModel.delete(favorite)
-//                            Toast.makeText(
-//                                this@DetailUserActivity,
-//                                "${favorite.login} telah dihapus dari data User Favorite ",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        } else {
-////                    detailViewModel.insert(favorite)
-//                            Toast.makeText(
-//                                this@DetailUserActivity,
-//                                "${favorite.login} telah ditambahkan ke data User Favorite",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    }
-//                }
-//
-//                binding.apply {
-//                    tvName.text = it.name
-//                    tvUsername.text = it.login
-//                    tvFollowersValue.text = "${it.followers}"
-//                    tvFollowingValue.text = "${it.following}"
-//                    tvCompany.text = it.company
-//                    tvLocation.text = it.location
-//                    tvRepoValue.text = it.public_repos
-//                    tvBlog.text = it.blog
-//                    tvBio.text = it.bio
-//                    Glide.with(this@DetailUserActivity)
-//                        .load(it.avatar_url)
-//                        .transition(DrawableTransitionOptions.withCrossFade())
-//                        .centerCrop()
-//                        .into(ivProfile)
-//                }
-//                showLoading(false)
-//
-//
-//
-//
-//            }
-//        }
-
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
         binding.apply {
             viewPager.adapter = sectionPagerAdapter
             tabs.setupWithViewPager(viewPager)
         }
-
-
-
-
     }
 
 
     private fun addFavorite(username : String) {
-//        val user = intent.getParcelableExtra<DetailUserResponse>(KEY_USER)
-
         val favorite = FavoriteEntity()
         favorite.login = username
         favorite.id = intent.getIntExtra(EXTRA_ID, 0)
@@ -148,23 +72,6 @@ class DetailUserActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener 
                         .centerCrop()
                         .into(ivProfile)
                 }
-//                binding.apply {
-//                    tvName.text = res.name
-//                    tvUsername.text = res.login
-//                    tvFollowersValue.text = "${res.followers}"
-//                    tvFollowingValue.text = "${res.following}"
-//                    tvCompany.text = res.company
-//                    tvLocation.text = res.location
-//                    tvRepoValue.text = res.public_repos
-//                    tvBlog.text = res.blog
-//                    tvBio.text = res.bio
-//                    Glide.with(this@DetailUserActivity)
-//                        .load(res.avatar_url)
-//                        .transition(DrawableTransitionOptions.withCrossFade())
-//                        .centerCrop()
-//                        .into(ivProfile)
-//                        }
-//        }
                 showLoading(false)
             }
         }
@@ -187,14 +94,14 @@ class DetailUserActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener 
                     detailViewModel.delete(favorite)
                     Toast.makeText(
                         this@DetailUserActivity,
-                        "${favorite.login} telah dihapus dari data User Favorite ",
+                        "${favorite.login} has removed from Favorite",
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
                     detailViewModel.insert(favorite)
                     Toast.makeText(
                         this@DetailUserActivity,
-                        "${favorite.login} telah ditambahkan ke data User Favorite",
+                        "${favorite.login} has added to Favorite",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -227,9 +134,6 @@ class DetailUserActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener 
             else -> false
         }
     }
-
-
-
     companion object{
         const val EXTRA_USERNAME = "extra_username"
         const val EXTRA_ID = "extra_id"

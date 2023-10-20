@@ -2,7 +2,6 @@ package com.arbi.gihubapp.data.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.arbi.gihubapp.data.db.FavoriteEntity
 
 @Dao
 interface FavoriteDao {

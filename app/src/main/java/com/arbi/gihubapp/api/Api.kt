@@ -10,7 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val token = "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"
+private const val token = "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"
 interface Api {
 
     @GET("search/users")
